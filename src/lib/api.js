@@ -19,6 +19,12 @@ export function setUnauthorizedHandler(fn) {
   onUnauthorizedHandler = fn;
 }
 
+// Empty by default: a same-origin deploy (Express serving the built app
+// itself) or local dev (Vite's proxy) both want the plain relative `/api`
+// path. Set VITE_API_URL only when the frontend is deployed separately from
+// the API, to the API's own origin, e.g. "https://estate-crm-api.onrender.com".
+const API_BASE = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ?? '';
+
 function toQueryString(params) {
   const search = new URLSearchParams();
   for (const [key, value] of Object.entries(params ?? {})) {
@@ -30,9 +36,13 @@ function toQueryString(params) {
 }
 
 async function request(path, { method = 'GET', body, params } = {}) {
-  const res = await fetch(`/api${path}${toQueryString(params)}`, {
+  const res = await fetch(`${API_BASE}/api${path}${toQueryString(params)}`, {
     method,
-    credentials: 'same-origin',
+    // 'include' rather than 'same-origin': when the API is a separate
+    // deployment (API_BASE set), the session cookie must still be sent and
+    // accepted cross-site. This is a superset of 'same-origin' behaviour, so
+    // it's also correct for a same-origin deploy — one setting for both.
+    credentials: 'include',
     headers: body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });

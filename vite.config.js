@@ -16,7 +16,7 @@ export default defineConfig({
     // or SameSite=None handling. Production serves client/dist from Express.
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'https://estate-crm-backend-0u4p.onrender.com',
         changeOrigin: true,
       },
     },
