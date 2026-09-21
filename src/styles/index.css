@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+/* ============================================================================
+ * Design tokens. This file IS the design system — every component below
+ * references these semantic names, never raw color values, so the whole
+ * app's look lives in one place.
+ * ========================================================================= */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Brand — Deep Harbour Blue. Trustworthy and financial, not the default
+     Tailwind blue every bootstrapped app ships with. */
+  --color-brand-50: #f0f6fc;
+  --color-brand-100: #dceaf7;
+  --color-brand-200: #bbd5ee;
+  --color-brand-300: #8fb8e0;
+  --color-brand-400: #5b94ce;
+  --color-brand-500: #3574b4;
+  --color-brand-600: #245c97;
+  --color-brand-700: #1c4878;
+  --color-brand-800: #163a60;
+  --color-brand-900: #12314f;
+  --color-brand-950: #0b1f33;
+
+  /* Accent — brass. Used sparingly: premium badges, funnel peak, highlights. */
+  --color-accent-50: #fdf8ee;
+  --color-accent-100: #f9edd3;
+  --color-accent-200: #f3dcab;
+  --color-accent-300: #e9c77c;
+  --color-accent-400: #d9a84d;
+  --color-accent-500: #c9922e;
+  --color-accent-600: #a87421;
+  --color-accent-700: #85590f;
+
+  /* Neutrals — slightly cool slate, never pure gray. */
+  --color-neutral-25: #fcfcfd;
+  --color-neutral-50: #f7f8fa;
+  --color-neutral-100: #eff1f5;
+  --color-neutral-200: #e2e6ec;
+  --color-neutral-300: #cbd2dc;
+  --color-neutral-400: #9aa4b2;
+  --color-neutral-500: #6b7688;
+  --color-neutral-600: #4e586b;
+  --color-neutral-700: #3a4354;
+  --color-neutral-800: #262d3a;
+  --color-neutral-900: #161b24;
+
+  /* Semantic status colors. */
+  --color-success-50: #ecfdf3;
+  --color-success-100: #d1fadf;
+  --color-success-200: #a6f4c5;
+  --color-success-500: #12b76a;
+  --color-success-600: #039855;
+  --color-success-700: #027a48;
+  --color-warning-50: #fffaeb;
+  --color-warning-100: #fef0c7;
+  --color-warning-200: #fedf89;
+  --color-warning-500: #f79009;
+  --color-warning-600: #dc6803;
+  --color-warning-700: #b54708;
+  --color-danger-50: #fef3f2;
+  --color-danger-100: #fee4e2;
+  --color-danger-200: #fecdca;
+  --color-danger-500: #f04438;
+  --color-danger-600: #d92d20;
+  --color-danger-700: #b42318;
+  --color-info-50: #eff4ff;
+  --color-info-100: #d1e0ff;
+  --color-info-200: #b2ccff;
+  --color-info-500: #528bff;
+  --color-info-600: #2970ff;
+  --color-info-700: #175cd3;
+  --color-purple-50: #f4f3ff;
+  --color-purple-100: #ebe9fe;
+  --color-purple-500: #7a5af8;
+  --color-purple-600: #6938ef;
+  --color-purple-700: #5925dc;
+  --color-teal-50: #ecfdff;
+  --color-teal-100: #cff9fe;
+  --color-teal-500: #06aed4;
+  --color-teal-600: #088ab2;
+  --color-teal-700: #0e7090;
+
+  /* Semantic surface aliases — components reference THESE, never a raw scale,
+     so the whole palette can shift by editing only this block. */
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f6f9;
+  --color-surface-sunken: #eef1f6;
+  --color-border: #e4e8ee;
+  --color-border-strong: #cbd2dc;
+  --color-fg: #141922;
+  --color-fg-muted: #4e586b;
+  --color-fg-subtle: #737f92;
+  --color-fg-inverse: #ffffff;
+  --color-sidebar: #0f2b47;
+  --color-sidebar-fg: #a9c0d9;
+  --color-sidebar-active: #1c4878;
+  --color-sidebar-border: #1b3a5a;
+
+  /* Type scale — 14px base. A CRM is a dense working tool, not a landing
+     page; 16px base would read as marketing copy. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 0.875rem;
+  --text-base--line-height: 1.25rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.875rem;
+  --text-xl--letter-spacing: -0.01em;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-2xl--letter-spacing: -0.017em;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.375rem;
+  --text-3xl--letter-spacing: -0.02em;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.75rem;
+  --text-4xl--letter-spacing: -0.022em;
+
+  /* Radii — 8 for controls, 12 for cards. 4 reads as Bootstrap; 16 reads toy. */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+
+  /* Shadows — two-layer, low opacity, cool-tinted. Cards use a border plus
+     shadow-xs; the heavier steps are reserved for lifted/floating surfaces. */
+  --shadow-xs: 0 1px 2px 0 rgb(16 24 40 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(16 24 40 / 0.1), 0 1px 2px 0 rgb(16 24 40 / 0.06);
+  --shadow-md: 0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06);
+  --shadow-lg: 0 12px 16px -4px rgb(16 24 40 / 0.08), 0 4px 6px -2px rgb(16 24 40 / 0.03);
+  --shadow-xl: 0 20px 24px -4px rgb(16 24 40 / 0.08), 0 8px 8px -4px rgb(16 24 40 / 0.03);
+  --shadow-2xl: 0 32px 64px -12px rgb(16 24 40 / 0.14);
+
+  /* Brand-tinted shadows for primary actions, so a button reads as lit
+     rather than as a flat rectangle sitting on the page. */
+  --shadow-brand: 0 1px 2px 0 rgb(18 49 79 / 0.24), 0 1px 3px 0 rgb(18 49 79 / 0.12);
+  --shadow-brand-lg: 0 8px 16px -4px rgb(18 49 79 / 0.28), 0 4px 6px -2px rgb(18 49 79 / 0.12);
+  --shadow-danger: 0 1px 2px 0 rgb(180 35 24 / 0.24), 0 1px 3px 0 rgb(180 35 24 / 0.12);
+  --shadow-success: 0 1px 2px 0 rgb(2 122 72 / 0.24), 0 1px 3px 0 rgb(2 122 72 / 0.12);
+
+  --spacing-sidebar: 16.5rem;
+  --spacing-topbar: 3.75rem;
+}
+
+@layer base {
+  /* ---- Lead stage colours -------------------------------------------------
+     Deliberately NOT in @theme. These are consumed only through inline
+     `style` attributes built from a template literal (`--color-stage-${stage}-fg`),
+     which Tailwind's class scanner cannot see — so inside @theme it would
+     tree-shake all fourteen of them out of the stylesheet and every stage
+     badge would render unstyled. Authored CSS is always emitted verbatim.
+     StageBadge, StageStepper, StageFunnel and KanbanBoard reference these. */
+  :root {
+    --color-stage-new-fg: #475467;
+    --color-stage-new-bg: #f2f4f7;
+    --color-stage-contacted-fg: #175cd3;
+    --color-stage-contacted-bg: #eff4ff;
+    --color-stage-site_visit-fg: #6941c6;
+    --color-stage-site_visit-bg: #f4f3ff;
+    --color-stage-interested-fg: #0e7090;
+    --color-stage-interested-bg: #ecfdff;
+    --color-stage-negotiation-fg: #b54708;
+    --color-stage-negotiation-bg: #fffaeb;
+    --color-stage-booked-fg: #027a48;
+    --color-stage-booked-bg: #ecfdf3;
+    --color-stage-lost-fg: #b42318;
+    --color-stage-lost-bg: #fef3f2;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans text-base;
+  }
+
+  /* Prices and counts must not jitter between table rows. */
+  .tabular-nums,
+  table td,
+  table th {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--color-brand-100);
+  }
+
+  /* Native scrollbar, styled to match rather than left at browser default. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+    background-clip: content-box;
+  }
+}
+
+@layer utilities {
+  /* Uniform focus treatment used by every interactive primitive, instead of
+     the browser's default outline. */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/20 focus-visible:border-brand-400;
+  }
+
+  /* ---- Gradients -------------------------------------------------------
+     Applied as backgrounds on buttons, icon chips and headers so surfaces
+     read as lit from above rather than as flat fills. */
+  .bg-gradient-brand {
+    background-image: linear-gradient(180deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
+  }
+  .bg-gradient-brand-hover {
+    background-image: linear-gradient(180deg, var(--color-brand-600) 0%, var(--color-brand-800) 100%);
+  }
+  .bg-gradient-danger {
+    background-image: linear-gradient(180deg, var(--color-danger-500) 0%, var(--color-danger-700) 100%);
+  }
+  .bg-gradient-success {
+    background-image: linear-gradient(180deg, var(--color-success-500) 0%, var(--color-success-700) 100%);
+  }
+  .bg-gradient-sidebar {
+    background-image: linear-gradient(165deg, #123252 0%, #0f2b47 45%, #0c2338 100%);
+  }
+  .bg-gradient-surface {
+    background-image: linear-gradient(180deg, #ffffff 0%, #fcfdfe 100%);
+  }
+  .bg-gradient-header {
+    background-image: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-muted) 100%);
+  }
+
+  /* A soft radial wash used behind hero panels and empty states. */
+  .bg-mesh-brand {
+    background-color: var(--color-brand-900);
+    background-image:
+      radial-gradient(at 15% 12%, rgb(53 116 180 / 0.55) 0px, transparent 55%),
+      radial-gradient(at 85% 8%, rgb(201 146 46 / 0.22) 0px, transparent 50%),
+      radial-gradient(at 75% 85%, rgb(28 72 120 / 0.65) 0px, transparent 55%),
+      radial-gradient(at 20% 92%, rgb(11 31 51 / 0.85) 0px, transparent 50%);
+  }
+
+  /* Hairline grid, sits under the mesh on the auth panel for texture. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Top inner highlight — the detail that makes a filled button look convex. */
+  .highlight-top {
+    box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.16);
+  }
+
+  .text-gradient-brand {
+    background-image: linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Cards that respond to the pointer. */
+  .lift {
+    @apply transition-[transform,box-shadow,border-color] duration-200;
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-neutral-200);
+    border-radius: var(--radius-md);
+  }
+  /* Shimmer rather than a plain pulse — reads as "loading", not "broken". */
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.55) 50%,
+      transparent 100%
+    );
+    animation: shimmer 1.6s infinite;
+  }
+
+  .animate-in {
+    animation: fade-in 0.18s ease-out;
+  }
+  .animate-scale-in {
+    animation: scale-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .animate-slide-up {
+    animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .animate-slide-left {
+    animation: slide-left 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
